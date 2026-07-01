@@ -37,7 +37,7 @@ Language models existed for a long time but only scaled up recently thanks to **
 #### Language models
 
 - A **language model encodes statistical information about one or more languages** — intuitively, how likely a word is to appear in a given context. Given "My favorite color is __", an English model should predict "blue" more often than "car".
-- The statistical nature of language was noticed long ago: Sherlock Holmes decoded stick figures in "The Adventure of the Dancing Men" (1905) using letter frequency (E is most common). **Claude Shannon**'s 1951 paper *"Prediction and Entropy of Printed English"* introduced concepts (like **entropy**) still used today.
+- <mark>The statistical nature of language was noticed long ago</mark>: Sherlock Holmes decoded stick figures in "The Adventure of the Dancing Men" (1905) using letter frequency (E is most common). **Claude Shannon**'s 1951 paper *"Prediction and Entropy of Printed English"* introduced concepts (like **entropy**) still used today.
 
 **Tokens and tokenization**
 - The basic unit of a language model is the **token** — a character, a word, or part of a word (like `-tion`), depending on the model.
