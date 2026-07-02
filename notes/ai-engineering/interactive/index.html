@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Engineering · Chapter 1 — Interactive Study Hub</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">AI Engineering <span>· Ch. 1</span></div>
+    <a href="index.html" class="active">Hub</a>
+    <a href="01-rise.html">1 · Rise</a>
+    <a href="02-use-cases.html">2 · Use Cases</a>
+    <a href="03-planning.html">3 · Planning</a>
+    <a href="04-stack.html">4 · Stack</a>
+    <a href="05-quiz.html">Quiz</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="pagehead">
+  <div class="kicker">Chip Huyen · AI Engineering · O'Reilly</div>
+  <h1>Chapter 1 — Introduction to Building AI Applications with Foundation Models</h1>
+  <p class="lede">An interactive study companion. Four short modules plus a quiz — each built around
+  the chapter's own examples, numbers, and frameworks so the ideas stick fast.</p>
+</header>
+
+<div class="callout">
+  <strong>The one-word thesis: scale.</strong> Scaling made models more capable (more demand for AI apps)
+  while <em>model&nbsp;as&nbsp;a&nbsp;service</em> made them accessible (lower barrier to entry). That combination —
+  demand up, barrier down — is what turned <strong>AI engineering</strong> (building applications on top of
+  readily available models) into one of the fastest-growing engineering disciplines.
+  <span class="src">Chapter 1, opening pages</span>
+</div>
+
+<h2>The chapter in numbers</h2>
+<div class="tiles">
+  <div class="tile">
+    <div class="t-label">Model considered "large", at writing</div>
+    <div class="t-value">100B</div>
+    <div class="t-note">parameters — GPT-1 (2018) was "large" at 117M</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">GitHub Copilot annual recurring revenue</div>
+    <div class="t-value">$100M</div>
+    <div class="t-note">just two years after launch</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">CLIP training pairs, no manual labels</div>
+    <div class="t-value">400M</div>
+    <div class="t-note">(image, text) pairs — 400× ImageNet</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">S&amp;P 500 firms citing AI on earnings calls</div>
+    <div class="t-value">1 in 3</div>
+    <div class="t-note">Q2 2023 — 3× the year before (FactSet)</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">LinkedIn's road from demo to product</div>
+    <div class="t-value">1 + 4 mo</div>
+    <div class="t-note">1 month to 80% of the experience, 4 more to pass 95%</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Pre-training's share of InstructGPT resources</div>
+    <div class="t-value">98%</div>
+    <div class="t-note">of overall compute and data</div>
+  </div>
+</div>
+
+<h2>Learning modules</h2>
+<div class="modules">
+  <a class="module" href="01-rise.html">
+    <div class="m-no">MODULE 1</div>
+    <h3>The Rise of AI Engineering</h3>
+    <p>Language models → LLMs → foundation models → AI engineering. Tokens, masked vs. autoregressive,
+    self-supervision, and the three growth factors.</p>
+    <span class="m-count">5 interactives · 1 chart</span>
+  </a>
+  <a class="module" href="02-use-cases.html">
+    <div class="m-no">MODULE 2</div>
+    <h3>Foundation Model Use Cases</h3>
+    <p>The eight application categories, consumer vs. enterprise, and the evidence — Copilot, Midjourney,
+    the MIT writing study, Chegg's collapse.</p>
+    <span class="m-count">Category explorer · 1 chart · evidence tiles</span>
+  </a>
+  <a class="module" href="03-planning.html">
+    <div class="m-no">MODULE 3</div>
+    <h3>Planning AI Applications</h3>
+    <p>Why build, the role of AI and humans, Crawl–Walk–Run, product defensibility, success metrics, and
+    the last-mile challenge.</p>
+    <span class="m-count">4 interactives · 1 chart</span>
+  </a>
+  <a class="module" href="04-stack.html">
+    <div class="m-no">MODULE 4</div>
+    <h3>The AI Engineering Stack</h3>
+    <p>Three layers, AI vs. ML engineering, adaptation techniques, training terminology, and why
+    evaluation got harder (the Gemini MMLU story).</p>
+    <span class="m-count">4 interactives · 1 chart</span>
+  </a>
+  <a class="module" href="05-quiz.html">
+    <div class="m-no">SELF-TEST</div>
+    <h3>Flashcards &amp; Quiz</h3>
+    <p>18 key-term flashcards and a 12-question quiz with explanations, covering every section of the
+    chapter.</p>
+    <span class="m-count">~15 min</span>
+  </a>
+</div>
+
+<h2>How the chapter fits together</h2>
+<div class="card">
+  <p style="margin-top:0"><strong>One sentence per section:</strong></p>
+  <ul>
+    <li><strong>The Rise of AI Engineering</strong> — self-supervision let language models scale into LLMs,
+      more modalities made them foundation models, and model-as-a-service turned building on them into a
+      discipline.</li>
+    <li><strong>Foundation Model Use Cases</strong> — eight recurring patterns (coding, media, writing,
+      education, bots, information aggregation, data organization, workflow automation) across consumer and
+      enterprise, with enterprises preferring lower-risk, internal-facing, close-ended apps.</li>
+    <li><strong>Planning AI Applications</strong> — decide <em>why</em> (risk vs. opportunity), define the
+      role of AI and humans, plan for defensibility, metrics, the last mile, and maintenance.</li>
+    <li><strong>The AI Engineering Stack</strong> — application development, model development, and
+      infrastructure; AI engineering is less about training models and more about <em>adapting and
+      evaluating</em> them.</li>
+  </ul>
+  <p class="subtle" style="margin-bottom:0">Deep-dive written notes:
+  <a href="../chapter-01-introduction.md">chapter-01-introduction.md</a></p>
+</div>
+
+<div class="foot-nav">
+  <span></span>
+  <a href="01-rise.html">Start Module 1 · The Rise of AI Engineering →</a>
+</div>
+
+</div>
+</body>
+</html>

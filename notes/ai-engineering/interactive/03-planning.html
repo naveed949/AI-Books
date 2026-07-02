@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 3 · Planning AI Applications</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">AI Engineering <span>· Ch. 1</span></div>
+    <a href="index.html">Hub</a>
+    <a href="01-rise.html">1 · Rise</a>
+    <a href="02-use-cases.html">2 · Use Cases</a>
+    <a href="03-planning.html" class="active">3 · Planning</a>
+    <a href="04-stack.html">4 · Stack</a>
+    <a href="05-quiz.html">Quiz</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="pagehead">
+  <div class="kicker">Module 3</div>
+  <h1>Planning AI Applications</h1>
+  <p class="lede">"It's easy to build a cool demo with foundation models. It's hard to create a profitable
+  product." Before building: why build it, what roles do AI and humans play, what's your moat, what does
+  success look like — and can you survive the last mile?</p>
+</header>
+
+<!-- ============ WHY BUILD ============ -->
+<h2><span class="sec-no">3.1</span>Why build this? The risk ladder</h2>
+<p>Building an AI app is a response to <strong>risks and opportunities</strong>. Click a rung — ordered
+from highest stakes to lowest.</p>
+
+<div class="card">
+  <div class="tabs">
+    <button data-tab="r1" aria-selected="true">1 · Existential threat</button>
+    <button data-tab="r2" aria-selected="false">2 · Missed opportunity</button>
+    <button data-tab="r3" aria-selected="false">3 · Fear of being left behind</button>
+  </div>
+  <div class="tabpanel open" data-panel="r1">
+    <p><strong>"If you don't do this, competitors with AI can make you obsolete."</strong> Highest priority.
+    Common where the business <em>is</em> document processing or information aggregation (financial
+    analysis, insurance, data processing) and in creative work (advertising, web design, image production).
+    Gartner 2023: <strong>7%</strong> of 2,500 executives cited <em>business continuity</em> as their AI
+    motivation. If the threat is existential → build <strong>in-house</strong>, don't outsource to a
+    competitor.</p>
+  </div>
+  <div class="tabpanel" data-panel="r2">
+    <p><strong>"You'll miss chances to boost profits and productivity."</strong> The most common motive. AI
+    can cut acquisition costs (copy, product descriptions, visuals), lift retention (support,
+    personalization), and help with lead gen, internal comms, market research, competitor tracking. Here,
+    <strong>buy</strong> options often beat building — cheaper, faster, sometimes better.</p>
+  </div>
+  <div class="tabpanel" data-panel="r3">
+    <p><strong>"Unsure where AI fits — but don't want to lag."</strong> Don't chase every hype train, but
+    waiting too long has been fatal — cue <strong>Kodak, Blockbuster, BlackBerry</strong>. Investing to
+    understand a transformational technology is reasonable if affordable (often lives in R&amp;D at big
+    companies; small startups may not afford even one person "looking around").</p>
+  </div>
+</div>
+
+<!-- ============ APPLE AXES ============ -->
+<h2><span class="sec-no">3.2</span>The role of AI in the product — three axes</h2>
+<p>From Apple's design guidance. Each axis changes the <strong>quality bar and latency budget</strong>.
+Toggle each pair:</p>
+
+<div class="card" id="axes">
+  <div class="axis" data-axis="0">
+    <div class="tabs">
+      <button data-side="a" aria-selected="true">Critical</button>
+      <button data-side="b" aria-selected="false">Complementary</button>
+    </div>
+    <p class="axis-body"></p>
+  </div>
+  <div class="axis" data-axis="1">
+    <div class="tabs">
+      <button data-side="a" aria-selected="true">Reactive</button>
+      <button data-side="b" aria-selected="false">Proactive</button>
+    </div>
+    <p class="axis-body"></p>
+  </div>
+  <div class="axis" data-axis="2">
+    <div class="tabs">
+      <button data-side="a" aria-selected="true">Dynamic</button>
+      <button data-side="b" aria-selected="false">Static</button>
+    </div>
+    <p class="axis-body"></p>
+  </div>
+</div>
+
+<!-- ============ HUMAN ROLE ============ -->
+<h2><span class="sec-no">3.3</span>The role of humans — Crawl, Walk, Run</h2>
+<p>Will AI support humans, decide directly, or both? Involving humans in AI's decisions is
+<strong>human-in-the-loop</strong>. Microsoft's (2023) framework for ramping automation:</p>
+
+<div class="stepper card" id="cwr">
+  <div class="track">
+    <button data-step="0" aria-current="step"><span class="step-no">STAGE 1</span>Crawl</button>
+    <button data-step="1"><span class="step-no">STAGE 2</span>Walk</button>
+    <button data-step="2"><span class="step-no">STAGE 3</span>Run</button>
+  </div>
+  <div class="step-body" id="cwr-body"></div>
+</div>
+
+<div class="callout">
+  The human role shifts as quality improves. Support-bot example: AI drafts → agents reference them;
+  if agents use <strong>95%</strong> of AI-suggested responses to simple requests verbatim, let customers
+  talk to the AI directly for those requests.
+</div>
+
+<!-- ============ DEFENSIBILITY ============ -->
+<h2><span class="sec-no">3.4</span>Defensibility — what's your moat?</h2>
+<p>The low entry barrier cuts both ways: easy for you = easy for competitors. If the underlying model
+expands, it can <strong>subsume your layer</strong> (the PDF-parser-on-ChatGPT cautionary tale). A VC
+partner's test: what stops Google or Microsoft from replicating you with three engineers in two weeks?</p>
+
+<div class="duo" style="grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));">
+  <div class="pane">
+    <h4><span class="dot s1"></span>Technology</h4>
+    <ul><li>With foundation models, most companies' core tech is <strong>similar</strong> — weak moat by
+    default.</li></ul>
+  </div>
+  <div class="pane">
+    <h4><span class="dot s1"></span>Data</h4>
+    <ul><li>Big firms hold more data, <em>but</em> a startup that ships first and gathers
+    <strong>usage data</strong> can make data its moat — even unusable-for-training data reveals user
+    behavior and product gaps ("data flywheel").</li></ul>
+  </div>
+  <div class="pane">
+    <h4><span class="dot s1"></span>Distribution</h4>
+    <ul><li>Getting the product in front of users — advantage likely belongs to <strong>big
+    companies</strong>.</li></ul>
+  </div>
+</div>
+
+<div class="callout">
+  Hope for the small: <strong>Calendly</strong> could've been a Google Calendar feature,
+  <strong>Mailchimp</strong> a Gmail feature, <strong>Photoroom</strong> a Google Photos feature. Many
+  winners began as a feature the giants overlooked.
+</div>
+
+<!-- ============ METRICS ============ -->
+<h2><span class="sec-no">3.5</span>Setting expectations — the usefulness threshold</h2>
+<p>Define success as <strong>business impact</strong> first (e.g., for a support bot: % automated, extra
+throughput, faster responses, labor saved — plus customer satisfaction, since more answers ≠ happier
+users). Then set a <strong>usefulness threshold</strong> the product must clear before shipping:</p>
+
+<div class="tiles">
+  <div class="tile">
+    <div class="t-label">Quality metrics</div>
+    <div class="t-value" style="font-size:19px">Response quality</div>
+    <div class="t-note">is the output actually good?</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Latency metrics</div>
+    <div class="t-value" style="font-size:19px">TTFT · TPOT · total</div>
+    <div class="t-note">time to first token · time per output token — "acceptable" depends on the baseline
+    (if humans take an hour, faster than that may be enough)</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Cost metrics</div>
+    <div class="t-value" style="font-size:19px">$ / inference</div>
+    <div class="t-note">cost per request</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Also</div>
+    <div class="t-value" style="font-size:19px">Interpretability, fairness</div>
+    <div class="t-note">and more, covered later in the book</div>
+  </div>
+</div>
+
+<!-- ============ LAST MILE CHART ============ -->
+<h2><span class="sec-no">3.6</span>Milestones and the last-mile challenge</h2>
+<p>Evaluate off-the-shelf models first — the stronger they are, the less work remains (and evaluation may
+change your goals, or kill the project). Then beware: <strong>a good demo doesn't promise a good
+product</strong>. UltraChat: "the journey from 0 to 60 is easy, whereas progressing from 60 to 100 becomes
+exceedingly challenging."</p>
+
+<div class="fig">
+  <div class="fig-title">LinkedIn's last mile — % of the desired experience achieved</div>
+  <div class="fig-sub">Anchored at LinkedIn's reported milestones (2024); the path between points is
+  illustrative · hover the markers</div>
+  <svg viewBox="0 0 820 285" role="img" aria-label="Line chart: 80 percent of the desired experience after 1 month, then 4 more months to pass 95 percent.">
+    <g>
+      <line class="gridline" x1="60" y1="230" x2="790" y2="230"/>
+      <line class="gridline" x1="60" y1="177.5" x2="790" y2="177.5"/>
+      <line class="gridline" x1="60" y1="125" x2="790" y2="125"/>
+      <line class="gridline" x1="60" y1="72.5" x2="790" y2="72.5"/>
+      <line class="gridline" x1="60" y1="20" x2="790" y2="20"/>
+      <text class="axn" x="50" y="234" text-anchor="end">0</text>
+      <text class="axn" x="50" y="181.5" text-anchor="end">25%</text>
+      <text class="axn" x="50" y="129" text-anchor="end">50%</text>
+      <text class="axn" x="50" y="76.5" text-anchor="end">75%</text>
+      <text class="axn" x="50" y="24" text-anchor="end">100%</text>
+      <text class="axn" x="60" y="252" text-anchor="middle">launch</text>
+      <text class="axn" x="206" y="252" text-anchor="middle">1 mo</text>
+      <text class="axn" x="352" y="252" text-anchor="middle">2 mo</text>
+      <text class="axn" x="498" y="252" text-anchor="middle">3 mo</text>
+      <text class="axn" x="644" y="252" text-anchor="middle">4 mo</text>
+      <text class="axn" x="790" y="252" text-anchor="middle">5 mo</text>
+    </g>
+    <path d="M60 230 L206 62 L790 30.5 L790 230 Z" fill="var(--series-1-wash)" stroke="none"/>
+    <path d="M60 230 L206 62 L790 30.5" fill="none" stroke="var(--series-1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="206" cy="62" r="6" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2"
+      data-tip="<b>1 month → 80%</b>The fast, encouraging start that made LinkedIn 'grossly underestimate' the rest."/>
+    <circle cx="790" cy="30.5" r="6" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2"
+      data-tip="<b>5 months → 95%+</b>Four more months to gain 15 points — kinks and hallucinations; each extra 1% 'discouragingly' slow."/>
+    <text class="dl" x="216" y="52">80% in 1 month</text>
+    <text class="dl" x="776" y="55" text-anchor="end">95% — 4 months later</text>
+  </svg>
+  <details class="tblview">
+    <summary>View as table</summary>
+    <table class="data">
+      <tr><th>Milestone</th><th class="num">Elapsed time</th><th class="num">Experience achieved</th></tr>
+      <tr><td>Fast start</td><td class="num">1 month</td><td class="num">80%</td></tr>
+      <tr><td>Last mile</td><td class="num">5 months</td><td class="num">95%+</td></tr>
+    </table>
+  </details>
+</div>
+
+<!-- ============ MAINTENANCE ============ -->
+<h2><span class="sec-no">3.7</span>Maintenance — riding the bullet train</h2>
+<p>Building on foundation models means committing to AI's pace of change. Not all change is equal:</p>
+
+<details class="acc" open>
+  <summary>Good changes — that still cause friction</summary>
+  <div class="acc-body">Longer context, better outputs, cheaper/faster inference (the chapter's Figure 1-11
+  shows cost per MMLU-level performance collapsing 2022→2024). But the best option today can be the worst
+  tomorrow: build in-house, then providers halve prices; bet on a vendor, and it fails to raise. Run
+  continuous cost-benefit analysis.</div>
+</details>
+<details class="acc">
+  <summary>Easier changes — model swaps</summary>
+  <div class="acc-body">Providers converge on similar APIs, so swapping is getting easier — but every model
+  has quirks, so prompts, workflows, and data need re-tuning. Painless only with <strong>versioning and
+  evaluation infrastructure</strong> in place.</div>
+</details>
+<details class="acc">
+  <summary>Harder changes — regulation</summary>
+  <div class="acc-body">AI is a national-security matter: compute, talent, and data are heavily regulated.
+  GDPR compliance cost businesses an estimated <strong>$9B</strong>; compute access can change overnight
+  (US October 2023 Executive Order). "If your GPU vendor is suddenly banned from selling GPUs to your
+  country, you're in trouble."</div>
+</details>
+<details class="acc">
+  <summary>Potentially fatal changes — IP</summary>
+  <div class="acc-body">IP rules for AI are unsettled. If your product sits on a model trained on other
+  people's data, will your product's IP stay yours? IP-heavy companies (e.g., game studios) hesitate for
+  exactly this reason.</div>
+</details>
+
+<div class="foot-nav">
+  <a href="02-use-cases.html">← Module 2 · Use Cases</a>
+  <a href="04-stack.html">Module 4 · The Stack →</a>
+</div>
+
+</div>
+
+<div class="chart-tip" id="tip"></div>
+
+<script>
+/* ---------- generic tabs (risk ladder) ---------- */
+document.querySelectorAll('.tabs').forEach(tabs=>{
+  const btns = [...tabs.querySelectorAll('button[data-tab]')];
+  if(!btns.length) return;
+  btns.forEach(b=> b.addEventListener('click', ()=>{
+    btns.forEach(x=>x.setAttribute('aria-selected', x===b));
+    const scope = tabs.parentElement;
+    scope.querySelectorAll('.tabpanel').forEach(p=> p.classList.toggle('open', p.dataset.panel===b.dataset.tab));
+  }));
+});
+
+/* ---------- Apple axes toggles ---------- */
+const axes = [
+  { a:`<strong>Critical:</strong> the app doesn't work without AI — Face ID needs facial recognition.
+       The more critical, the more <strong>accurate and reliable</strong> the AI must be.`,
+    b:`<strong>Complementary:</strong> the app survives without AI — Gmail works without Smart Compose.
+       Users forgive mistakes when AI isn't core.` },
+  { a:`<strong>Reactive:</strong> responds to a user's request or action — a chatbot. Usually needs to be
+       <strong>fast</strong> (users are waiting).`,
+    b:`<strong>Proactive:</strong> fires when there's an opportunity — Google Maps traffic alerts. Can be
+       <strong>precomputed</strong> (latency matters less), but carries a <strong>higher quality bar</strong>:
+       nobody asked for it, so low quality reads as intrusive.` },
+  { a:`<strong>Dynamic:</strong> updates continually with user feedback — Face ID adapts as faces change;
+       per-user finetuning; ChatGPT's memory. Often implies per-user personalization mechanisms.`,
+    b:`<strong>Static:</strong> updates periodically — object detection in Google Photos updates when the
+       app updates. Often one shared model for a whole user group.` },
+];
+document.querySelectorAll('#axes .axis').forEach(ax=>{
+  const i = +ax.dataset.axis;
+  const body = ax.querySelector('.axis-body');
+  const btns = [...ax.querySelectorAll('button[data-side]')];
+  const render = side => { body.innerHTML = axes[i][side]; };
+  btns.forEach(b=> b.addEventListener('click', ()=>{
+    btns.forEach(x=>x.setAttribute('aria-selected', x===b));
+    render(b.dataset.side);
+  }));
+  render('a');
+});
+
+/* ---------- crawl-walk-run stepper ---------- */
+const cwrSteps = [
+  `<h3 style="margin-top:0">Crawl — humans mandatory</h3>
+   <p>AI provides background support only; a human is always in the loop. Example: AI drafts several
+   responses that human support agents reference to reply faster.</p>`,
+  `<h3 style="margin-top:0">Walk — AI works with insiders</h3>
+   <p>AI interacts directly with <strong>internal employees</strong>. Mistakes stay in the family while you
+   measure quality — e.g., tracking how often agents accept AI suggestions verbatim.</p>`,
+  `<h3 style="margin-top:0">Run — AI meets the world</h3>
+   <p>Increased automation, potentially <strong>direct AI interaction with external users</strong> — e.g.,
+   AI answers simple customer requests end-to-end and routes complex ones to humans.</p>`
+];
+let cwrI = 0;
+const cwrBtns = [...document.querySelectorAll('#cwr .track button')];
+function cwrRender(){
+  document.getElementById('cwr-body').innerHTML = cwrSteps[cwrI];
+  cwrBtns.forEach((b,i)=> i===cwrI ? b.setAttribute('aria-current','step') : b.removeAttribute('aria-current'));
+}
+cwrBtns.forEach(b=> b.addEventListener('click', ()=>{ cwrI=+b.dataset.step; cwrRender(); }));
+cwrRender();
+
+/* ---------- chart tooltips ---------- */
+const tip = document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+  el.style.cursor = 'pointer';
+  el.addEventListener('mousemove', e=>{
+    tip.innerHTML = el.dataset.tip;
+    tip.style.opacity = 1;
+    const pad = 14, w = tip.offsetWidth;
+    let x = e.clientX + pad; if (x + w > innerWidth - 8) x = e.clientX - w - pad;
+    tip.style.left = x + 'px'; tip.style.top = (e.clientY + pad) + 'px';
+  });
+  el.addEventListener('mouseleave', ()=>{ tip.style.opacity = 0; });
+});
+</script>
+</body>
+</html>
