@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 1 · The Rise of AI Engineering</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">AI Engineering <span>· Ch. 1</span></div>
+    <a href="index.html">Hub</a>
+    <a href="01-rise.html" class="active">1 · Rise</a>
+    <a href="02-use-cases.html">2 · Use Cases</a>
+    <a href="03-planning.html">3 · Planning</a>
+    <a href="04-stack.html">4 · Stack</a>
+    <a href="05-quiz.html">Quiz</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="pagehead">
+  <div class="kicker">Module 1</div>
+  <h1>The Rise of AI Engineering</h1>
+  <p class="lede">How language models became LLMs, LLMs became foundation models, and foundation models
+  spawned a new engineering discipline. Work through each interactive — the story builds step by step.</p>
+</header>
+
+<!-- ============ 1. EVOLUTION STEPPER ============ -->
+<h2><span class="sec-no">1.1</span>The evolution, step by step</h2>
+<p>ChatGPT and Copilot look like they came out of nowhere — they're the culmination of decades of work.
+Click through the five stages.</p>
+
+<div class="stepper card" id="evo">
+  <div class="track" role="tablist">
+    <button data-step="0" aria-current="step"><span class="step-no">1950s →</span>Language models</button>
+    <button data-step="1"><span class="step-no">KEY UNLOCK</span>Self-supervision</button>
+    <button data-step="2"><span class="step-no">SCALE</span>LLMs</button>
+    <button data-step="3"><span class="step-no">+ MODALITIES</span>Foundation models</button>
+    <button data-step="4"><span class="step-no">TODAY</span>AI engineering</button>
+  </div>
+  <div class="step-body" id="evo-body"></div>
+  <div class="step-controls">
+    <button class="btn" id="evo-prev">← Back</button>
+    <button class="btn primary" id="evo-next">Next →</button>
+  </div>
+</div>
+
+<!-- ============ 2. TOKENIZATION ============ -->
+<h2><span class="sec-no">1.2</span>Tokens — the basic unit</h2>
+<p>A language model's basic unit is the <strong>token</strong>: a character, a word, or part of a word
+(like <em>-tion</em>). Breaking text into tokens is <strong>tokenization</strong>; the set of all tokens a
+model can use is its <strong>vocabulary</strong> (Mixtral&nbsp;8×7B: 32,000 · GPT-4: 100,256).</p>
+
+<div class="card">
+  <h3 style="margin-top:0">See GPT-4 tokenize the book's example</h3>
+  <p class="subtle">"I can't wait to build AI applications" → 9 tokens. Note how "can't" splits into
+  <code>can</code> + <code>'t</code>.</p>
+  <div class="token-row" id="tok-row">
+    <span class="token">I</span><span class="token"> can</span><span class="token">'t</span><span class="token"> wait</span><span class="token"> to</span><span class="token"> build</span><span class="token"> AI</span><span class="token"> applic</span><span class="token">ations</span>
+  </div>
+  <button class="btn primary" id="tok-play">Tokenize ▸</button>
+
+  <h3>Why tokens, not words or characters?</h3>
+  <div class="pill-row">
+    <span class="pill">1 · Meaningful pieces — "cooking" → "cook" + "ing"</span>
+    <span class="pill">2 · Smaller vocabulary → more efficient model</span>
+    <span class="pill">3 · Handles unknown words — "chatgpting" → "chatgpt" + "ing"</span>
+  </div>
+
+  <h3>Rule of thumb: 100 tokens ≈ 75 words</h3>
+  <p class="subtle">For GPT-4, an average token is ≈ ¾ of a word. Convert either way:</p>
+  <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+    <label style="font-size:14px">Words&nbsp;
+      <input id="cw-words" type="number" value="750" min="0" style="width:90px; font:inherit; padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--page); color:var(--text-primary)">
+    </label>
+    <span style="color:var(--text-muted)">≈</span>
+    <label style="font-size:14px">Tokens&nbsp;
+      <input id="cw-tokens" type="number" value="1000" min="0" style="width:90px; font:inherit; padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--page); color:var(--text-primary)">
+    </label>
+  </div>
+</div>
+
+<!-- ============ 3. MASKED vs AUTOREGRESSIVE ============ -->
+<h2><span class="sec-no">1.3</span>Two kinds of language model</h2>
+<p>They differ by <strong>what context they may use</strong> to predict a token. Toggle between them:</p>
+
+<div class="card">
+  <div class="tabs" role="tablist">
+    <button data-tab="ar" aria-selected="true">Autoregressive (e.g. GPT)</button>
+    <button data-tab="mlm" aria-selected="false">Masked (e.g. BERT)</button>
+  </div>
+
+  <div class="tabpanel open" data-panel="ar">
+    <p class="seq" style="margin-bottom:4px">
+      <span class="ctx">My</span> <span class="ctx">favorite</span> <span class="ctx">color</span>
+      <span class="ctx">is</span> <span class="pred">___</span>
+    </p>
+    <p><strong>Predicts the next token using only preceding tokens</strong> — then generates one token after
+    another. The model of choice for <strong>text generation</strong>, and far more popular today.
+    Sometimes called a <em>causal</em> language model. In the book, "language model" means this by default.</p>
+  </div>
+
+  <div class="tabpanel" data-panel="mlm">
+    <p class="seq" style="margin-bottom:4px">
+      <span class="ctx">My</span> <span class="ctx">favorite</span> <span class="pred">___</span>
+      <span class="ctx">is</span> <span class="ctx">blue</span>
+    </p>
+    <p><strong>Fills in the blank using context from both sides.</strong> Classic example:
+    <strong>BERT</strong> (Devlin et al., 2018). Common for non-generative tasks — sentiment analysis, text
+    classification — and tasks needing whole-context understanding, like code debugging.</p>
+  </div>
+
+  <div class="callout" style="margin-bottom:4px">
+    A language model is a <strong>completion machine</strong>: given a prompt, it predicts what comes next —
+    probabilistically, with no guarantee of correctness. Translation, summarization, coding, math, and spam
+    classification can all be framed as completion. But <strong>completion ≠ conversation</strong>: ask a raw
+    completion machine a question and it may "complete" you with another question. Making models respond
+    appropriately is what <em>post-training</em> is for.
+  </div>
+</div>
+
+<!-- ============ 4. SELF-SUPERVISION ============ -->
+<h2><span class="sec-no">1.4</span>Self-supervision — the unlock that enabled scale</h2>
+<p>Why did <em>language models</em> (not recommenders, not forecasters) become the center of the scaling
+race? Because they can be trained with <strong>self-supervision</strong>: each text sequence supplies both
+the contexts and the labels. No human labeling — so training data is effectively unlimited.</p>
+
+<div class="card">
+  <h3 style="margin-top:0">One sentence → six free training samples</h3>
+  <p class="subtle">"I love street food." — click through. The highlighted context predicts the dashed
+  label. <code>&lt;BOS&gt;</code>/<code>&lt;EOS&gt;</code> mark sequence start/end (<code>&lt;EOS&gt;</code>
+  teaches the model when to stop).</p>
+  <div class="seq" id="ss-line" style="min-height:44px"></div>
+  <div class="step-controls">
+    <button class="btn" id="ss-prev">← Back</button>
+    <button class="btn primary" id="ss-next">Next sample →</button>
+    <span class="subtle" id="ss-count" style="align-self:center"></span>
+  </div>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">The labeling bottleneck it removes</h3>
+  <p class="subtle">Supervision needs labeled data. At the book's 5¢-per-image example, pick a dataset size:</p>
+  <div class="tabs">
+    <button data-cost="1000000" aria-selected="true">ImageNet-scale · 1M images</button>
+    <button data-cost="10000000" aria-selected="false">10M images</button>
+    <button data-cost="1000000000" aria-selected="false">1B images</button>
+  </div>
+  <div class="tiles" style="margin-top:14px">
+    <div class="tile"><div class="t-label">Labeling cost (1 pass)</div><div class="t-value" id="lc-1">$50,000</div></div>
+    <div class="tile"><div class="t-label">With 2× cross-checking</div><div class="t-value" id="lc-2">$100,000</div></div>
+  </div>
+  <p class="subtle">And that's for labels most people can produce untrained. Latin translations cost more;
+  cancer annotations on CT scans would be "astronomical". Self-supervised text needs none of this.
+  <strong>Note:</strong> self-supervision ≠ unsupervised — labels are <em>inferred from the input</em>, not
+  absent.</p>
+</div>
+
+<!-- ============ 5. SCALE CHART ============ -->
+<h2><span class="sec-no">1.5</span>"Large" is a moving target</h2>
+<p>A model's size is measured by its <strong>parameters</strong> — variables updated during training. What
+counts as "large" keeps being revised upward. (Larger models have more capacity to learn, so they need
+more data to reach their potential — training a big model on a small dataset just wastes compute.)</p>
+
+<div class="fig" id="fig-scale">
+  <div class="fig-title">What "a large language model" meant, over time</div>
+  <div class="fig-sub">Parameters, log scale — each gridline is 10× the previous</div>
+  <svg viewBox="0 0 820 210" role="img" aria-label="Dot plot on a log scale: GPT-1 at 117 million parameters in June 2018, GPT-2 at 1.5 billion in February 2019, and roughly 100 billion considered large at the book's writing.">
+    <!-- gridlines at 1e8..1e11 mapped x: 140 + (log10(v)-8)/3 * 640 -->
+    <g>
+      <line class="gridline" x1="140" y1="18" x2="140" y2="168"/>
+      <line class="gridline" x1="353.3" y1="18" x2="353.3" y2="168"/>
+      <line class="gridline" x1="566.7" y1="18" x2="566.7" y2="168"/>
+      <line class="gridline" x1="780" y1="18" x2="780" y2="168"/>
+      <text class="axn" x="140" y="184" text-anchor="middle">100M</text>
+      <text class="axn" x="353.3" y="184" text-anchor="middle">1B</text>
+      <text class="axn" x="566.7" y="184" text-anchor="middle">10B</text>
+      <text class="axn" x="780" y="184" text-anchor="middle">100B</text>
+    </g>
+    <!-- rows: y = 45, 95, 145 ; x: gpt1 log10(1.17e8)=8.0682 → 154.5 ; gpt2 log10(1.5e9)=9.1761 → 390.9 ; 100B → 780 -->
+    <g id="scale-dots">
+      <text class="dl" x="10" y="49">GPT-1</text><text class="dls" x="10" y="63" style="font-size:10.5px">Jun 2018</text>
+      <circle cx="154.5" cy="45" r="6" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2" data-tip="<b>GPT-1 — 117M parameters</b>Considered large in June 2018."/>
+      <text class="dl" x="169" y="49">117M</text>
+
+      <text class="dl" x="10" y="99">GPT-2</text><text class="dls" x="10" y="113" style="font-size:10.5px">Feb 2019</text>
+      <circle cx="390.9" cy="95" r="6" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2" data-tip="<b>GPT-2 — 1.5B parameters</b>Its release made 117M look small."/>
+      <text class="dl" x="405" y="99">1.5B</text>
+
+      <text class="dl" x="10" y="149">"Large" now</text><text class="dls" x="10" y="163" style="font-size:10.5px">at writing</text>
+      <circle cx="780" cy="145" r="6" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2" data-tip="<b>≈100B parameters</b>What counts as large at the book's writing — and 'perhaps one day, this size will be considered small.'"/>
+      <text class="dl" x="766" y="122" text-anchor="end">100B</text>
+    </g>
+  </svg>
+  <details class="tblview">
+    <summary>View as table</summary>
+    <table class="data">
+      <tr><th>Model / era</th><th>Date</th><th class="num">Parameters</th></tr>
+      <tr><td>GPT-1</td><td>June 2018</td><td class="num">117,000,000</td></tr>
+      <tr><td>GPT-2</td><td>February 2019</td><td class="num">1,500,000,000</td></tr>
+      <tr><td>"Large" at the book's writing</td><td>—</td><td class="num">≈100,000,000,000</td></tr>
+    </table>
+  </details>
+</div>
+
+<!-- ============ 6. FOUNDATION MODELS ============ -->
+<h2><span class="sec-no">1.6</span>From LLMs to foundation models</h2>
+<div class="duo">
+  <div class="pane">
+    <h4><span class="dot s1"></span>Why "foundation"?</h4>
+    <ul>
+      <li>Text-only models can't perceive the world the way humans do — so models absorbed more
+        <strong>modalities</strong> (GPT-4V and Claude 3: images; others: video, 3D, protein structures).</li>
+      <li>"Foundation" = both their <strong>importance</strong> and that they can be
+        <strong>built upon</strong>.</li>
+      <li>Breaks the old modality split of AI research (NLP / computer vision / audio).</li>
+      <li><strong>Multimodal model</strong> = handles &gt;1 modality; generative multimodal =
+        <strong>LMM</strong>. The book's "foundation models" covers both LLMs and LMMs.</li>
+    </ul>
+  </div>
+  <div class="pane">
+    <h4><span class="dot s2"></span>CLIP — self-supervision goes multimodal</h4>
+    <ul>
+      <li>OpenAI's CLIP (2021) used <strong>natural language supervision</strong>: 400M (image, text) pairs
+        found co-occurring on the internet — 400× ImageNet, zero labeling cost.</li>
+      <li>First model to generalize to many image-classification tasks <strong>without extra
+        training</strong>.</li>
+      <li>CLIP is <strong>not generative</strong> — it's an <strong>embedding model</strong> (vectors that
+        capture meaning), the backbone behind Flamingo, LLaVA, Gemini.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout">
+  Foundation models also flipped AI from <strong>task-specific</strong> to <strong>general-purpose</strong>.
+  One model does sentiment analysis <em>and</em> translation. To push it further on <em>your</em> task, three
+  adaptation techniques recur all book long: <strong>prompt engineering</strong>, <strong>RAG</strong>, and
+  <strong>finetuning</strong> — "ten examples and one weekend versus 1&nbsp;million examples and six months."
+</div>
+
+<!-- ============ 7. THREE FACTORS ============ -->
+<h2><span class="sec-no">1.7</span>Three factors behind the boom</h2>
+<p>AI engineering = building apps on foundation models. Building AI apps isn't new (ML engineering /
+MLOps) — but three conditions made this moment different. Expand each:</p>
+
+<details class="acc" open>
+  <summary>Factor 1 — General-purpose capabilities</summary>
+  <div class="acc-body">Foundation models don't just do old tasks better — they do <strong>more
+  tasks</strong>. AI now writes at or above human level, so it can (partially) automate anything requiring
+  communication — "pretty much everything": emails, support, contracts, marketing visuals, code, even
+  synthesizing training data for future models. More useful → more users → more demand.</div>
+</details>
+<details class="acc">
+  <summary>Factor 2 — Increased AI investments</summary>
+  <div class="acc-body">ChatGPT triggered a rush: Goldman Sachs projected AI investment approaching
+  <strong>$100B in the US / $200B globally by 2025</strong>. <strong>1 in 3 S&amp;P 500</strong> companies
+  mentioned AI on Q2 2023 earnings calls (3× the prior year); those that did saw stocks rise
+  <strong>4.6% vs 2.4%</strong> (causation vs. correlation unclear). Scribd's estimated AI cost fell
+  <strong>two orders of magnitude</strong> in one year (Apr 2022 → Apr 2023).</div>
+</details>
+<details class="acc">
+  <summary>Factor 3 — Low entrance barrier</summary>
+  <div class="acc-body"><strong>Model as a service</strong>: powerful models behind a single API call — no
+  serving infrastructure needed. Plus AI writes code and speaks plain English, so
+  <em>"anyone, and I mean anyone, can now develop AI applications."</em> Building the models themselves
+  stays with big corporations, governments, and well-funded startups — Sam Altman: the biggest opportunity
+  for most people is <strong>adapting</strong> these models. Proof of the gold rush: within 2 years,
+  AutoGPT, Stable Diffusion Web UI, LangChain, and Ollama each out-starred Bitcoin on GitHub.</div>
+</details>
+
+<div class="card">
+  <h3 style="margin-top:0">Why call it "AI engineering"?</h3>
+  <p style="margin-bottom:0">Not <strong>ML engineering</strong> — foundation-model work differs too much from traditional ML
+  (though it's a fine umbrella term). Not the <strong>-Ops</strong> names (MLOps, LLMOps) — the focus is on
+  <em>engineering</em> models to do what you want, not just operations. And when Huyen surveyed 20
+  practitioners, most preferred <strong>AI engineering</strong>. "I decided to go with the people."</p>
+</div>
+
+<div class="foot-nav">
+  <a href="index.html">← Hub</a>
+  <a href="02-use-cases.html">Module 2 · Use Cases →</a>
+</div>
+
+</div>
+
+<div class="chart-tip" id="tip"></div>
+
+<script>
+/* ---------- evolution stepper ---------- */
+const evoSteps = [
+  `<h3 style="margin-top:0">Language models (1950s → )</h3>
+   <p>A language model encodes <strong>statistical information about language</strong> — how likely a word
+   is in a context ("My favorite color is __" → "blue" ≫ "car"). The idea is old: Sherlock Holmes decoded
+   the Dancing Men cipher with letter frequencies; <strong>Claude Shannon's</strong> 1951 paper
+   <em>"Prediction and Entropy of Printed English"</em> introduced entropy — still used today.</p>`,
+  `<h3 style="margin-top:0">Self-supervision — the unlock</h3>
+   <p>Supervised learning needs expensive human labels. Self-supervision lets the model
+   <strong>infer labels from the input itself</strong>: every sentence is its own training data. Since text
+   is everywhere — books, blogs, Reddit — training data became effectively unlimited. (Details in §1.4
+   below.)</p>`,
+  `<h3 style="margin-top:0">Large language models</h3>
+   <p>With unlimited data, models scaled: GPT-1 (2018) at <strong>117M</strong> parameters was "large";
+   GPT-2 (2019) at <strong>1.5B</strong> reset the bar; by the book's writing, "large" means
+   <strong>~100B</strong>. "LLM" is not a scientific term — large today is tiny tomorrow.</p>`,
+  `<h3 style="margin-top:0">Foundation models</h3>
+   <p>Models absorbed <strong>more modalities</strong> (images, video, 3D, proteins) and became
+   <strong>general-purpose</strong> — one model, many tasks. "Foundation" = important + built-upon. Includes
+   both LLMs and large multimodal models (LMMs).</p>`,
+  `<h3 style="margin-top:0">AI engineering</h3>
+   <p><strong>Building applications on top of foundation models.</strong> Demand up (models can do more) +
+   barrier down (model as a service, APIs) + capital in = the fastest-growing engineering discipline.
+   Focus shifts from <em>training models</em> to <em>adapting and evaluating them</em>.</p>`
+];
+let evoI = 0;
+const evoBody = document.getElementById('evo-body');
+const evoBtns = [...document.querySelectorAll('#evo .track button')];
+function evoRender(){
+  evoBody.innerHTML = evoSteps[evoI];
+  evoBtns.forEach((b,i)=> i===evoI ? b.setAttribute('aria-current','step') : b.removeAttribute('aria-current'));
+  document.getElementById('evo-prev').disabled = evoI===0;
+  document.getElementById('evo-next').disabled = evoI===evoSteps.length-1;
+}
+evoBtns.forEach(b=> b.addEventListener('click', ()=>{ evoI=+b.dataset.step; evoRender(); }));
+document.getElementById('evo-prev').onclick = ()=>{ if(evoI>0){evoI--; evoRender();} };
+document.getElementById('evo-next').onclick = ()=>{ if(evoI<evoSteps.length-1){evoI++; evoRender();} };
+evoRender();
+
+/* ---------- tokenization animation ---------- */
+document.getElementById('tok-play').addEventListener('click', ()=>{
+  const toks = [...document.querySelectorAll('#tok-row .token')];
+  toks.forEach(t=>t.classList.remove('shown'));
+  toks.forEach((t,i)=> setTimeout(()=>t.classList.add('shown'), 120*i + 80));
+});
+
+/* ---------- words<->tokens converter ---------- */
+const cw = document.getElementById('cw-words'), ct = document.getElementById('cw-tokens');
+cw.addEventListener('input', ()=>{ ct.value = Math.round((+cw.value||0) * 4/3); });
+ct.addEventListener('input', ()=>{ cw.value = Math.round((+ct.value||0) * 3/4); });
+
+/* ---------- generic tabs ---------- */
+document.querySelectorAll('.tabs').forEach(tabs=>{
+  const btns = [...tabs.querySelectorAll('button[data-tab]')];
+  if(!btns.length) return;
+  btns.forEach(b=> b.addEventListener('click', ()=>{
+    btns.forEach(x=>x.setAttribute('aria-selected', x===b));
+    const scope = tabs.parentElement;
+    scope.querySelectorAll('.tabpanel').forEach(p=> p.classList.toggle('open', p.dataset.panel===b.dataset.tab));
+  }));
+});
+
+/* ---------- self-supervision sample builder ---------- */
+const words = ['<BOS>','I','love','street','food','.','<EOS>'];
+let ssI = 0; // number of context tokens shown beyond <BOS>; sample i: context = words[0..i], label = words[i+1]
+function esc(s){ return s.replace('<','&lt;').replace('>','&gt;'); }
+function ssRender(){
+  const line = document.getElementById('ss-line');
+  let html = '';
+  for(let j=0;j<words.length;j++){
+    if(j<=ssI) html += `<span class="ctx">${esc(words[j])}</span> `;
+    else if(j===ssI+1) html += `<span class="pred">${esc(words[j])}</span> `;
+    else html += `<span class="off">${esc(words[j])}</span> `;
+  }
+  line.innerHTML = html;
+  document.getElementById('ss-count').textContent = `sample ${ssI+1} of 6 — context (solid) → predicts (dashed)`;
+  document.getElementById('ss-prev').disabled = ssI===0;
+  document.getElementById('ss-next').disabled = ssI===5;
+}
+document.getElementById('ss-prev').onclick = ()=>{ if(ssI>0){ssI--; ssRender();} };
+document.getElementById('ss-next').onclick = ()=>{ if(ssI<5){ssI++; ssRender();} };
+ssRender();
+
+/* ---------- labeling cost picker ---------- */
+document.querySelectorAll('button[data-cost]').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('button[data-cost]').forEach(x=>x.setAttribute('aria-selected', x===b));
+    const n = +b.dataset.cost, c = n*0.05;
+    const fmt = v => v>=1e9 ? '$'+(v/1e9).toLocaleString(undefined,{maximumFractionDigits:1})+'B'
+               : v>=1e6 ? '$'+(v/1e6).toLocaleString(undefined,{maximumFractionDigits:1})+'M'
+               : '$'+v.toLocaleString();
+    document.getElementById('lc-1').textContent = fmt(c);
+    document.getElementById('lc-2').textContent = fmt(c*2);
+  });
+});
+
+/* ---------- chart tooltips ---------- */
+const tip = document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+  el.style.cursor = 'pointer';
+  el.addEventListener('mousemove', e=>{
+    tip.innerHTML = el.dataset.tip;
+    tip.style.opacity = 1;
+    const pad = 14, w = tip.offsetWidth;
+    let x = e.clientX + pad; if (x + w > innerWidth - 8) x = e.clientX - w - pad;
+    tip.style.left = x + 'px'; tip.style.top = (e.clientY + pad) + 'px';
+  });
+  el.addEventListener('mouseleave', ()=>{ tip.style.opacity = 0; });
+});
+</script>
+</body>
+</html>

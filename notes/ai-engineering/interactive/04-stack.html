@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 4 · The AI Engineering Stack</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">AI Engineering <span>· Ch. 1</span></div>
+    <a href="index.html">Hub</a>
+    <a href="01-rise.html">1 · Rise</a>
+    <a href="02-use-cases.html">2 · Use Cases</a>
+    <a href="03-planning.html">3 · Planning</a>
+    <a href="04-stack.html" class="active">4 · Stack</a>
+    <a href="05-quiz.html">Quiz</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="pagehead">
+  <div class="kicker">Module 4</div>
+  <h1>The AI Engineering Stack</h1>
+  <p class="lede">Ignore the shifting sand; learn the building blocks. Three layers, what changed from ML
+  engineering, how models are adapted — and why evaluation became the big problem.</p>
+</header>
+
+<!-- ============ THREE LAYERS ============ -->
+<h2><span class="sec-no">4.1</span>Three layers — click each</h2>
+<p>Every AI application stack has three layers. You typically <strong>start at the top and move down as
+needed</strong>.</p>
+
+<div class="card">
+  <div id="layers" style="display:grid; gap:8px; margin-bottom:14px;">
+    <button class="btn layer-btn" data-layer="0" style="text-align:left; border-left:4px solid var(--series-1);">
+      <strong>1 · Application development</strong><br>
+      <span class="subtle">prompts &amp; context · evaluation · interfaces — where most of the action is</span>
+    </button>
+    <button class="btn layer-btn" data-layer="1" style="text-align:left; border-left:4px solid var(--series-2);">
+      <strong>2 · Model development</strong><br>
+      <span class="subtle">modeling &amp; training · dataset engineering · inference optimization · evaluation</span>
+    </button>
+    <button class="btn layer-btn" data-layer="2" style="text-align:left; border-left:4px solid var(--baseline);">
+      <strong>3 · Infrastructure</strong><br>
+      <span class="subtle">model serving · data &amp; compute management · monitoring</span>
+    </button>
+  </div>
+  <div id="layer-body" class="step-body"></div>
+</div>
+
+<div class="callout">
+  <strong>Reality check from GitHub (March 2024):</strong> Huyen counted 920 AI repos with ≥500 stars.
+  After Stable Diffusion and ChatGPT, the biggest 2023 jumps were in <strong>applications and application
+  development</strong>. Infrastructure grew least — because core infra needs (resource management, serving,
+  monitoring) <strong>stay the same</strong> even as models and apps change.
+</div>
+
+<!-- ============ WHAT CHANGED ============ -->
+<h2><span class="sec-no">4.2</span>AI engineering vs. ML engineering</h2>
+<div class="duo">
+  <div class="pane">
+    <h4><span class="dot s2"></span>What stays the same</h4>
+    <ul>
+      <li>AI apps must <strong>solve business problems</strong> — map business ↔ ML metrics.</li>
+      <li><strong>Systematic experimentation</strong> — just with prompts, models, retrieval, sampling
+        variables instead of hyperparameters.</li>
+      <li>Making models <strong>faster and cheaper</strong>.</li>
+      <li><strong>Feedback loops</strong> to improve with production data.</li>
+    </ul>
+  </div>
+  <div class="pane">
+    <h4><span class="dot s1"></span>The three big shifts</h4>
+    <ul>
+      <li><strong>1 · Adaptation over training</strong> — you use a model someone else trained.</li>
+      <li><strong>2 · Bigger models</strong> — more compute, higher latency → inference optimization and
+        GPU/cluster skills matter more ("we know 10 GPUs, not 1,000").</li>
+      <li><strong>3 · Open-ended outputs</strong> — flexible, but much <strong>harder to
+        evaluate</strong>.</li>
+    </ul>
+  </div>
+</div>
+<div class="callout">In short: AI engineering is <strong>less about model development, more about adapting
+and evaluating models</strong>.</div>
+
+<h3>How responsibilities shift — the chapter's two tables</h3>
+<div class="card">
+  <div class="tabs">
+    <button data-tab="t4" aria-selected="true">Model development (Table 1-4)</button>
+    <button data-tab="t6" aria-selected="false">App development (Table 1-6)</button>
+  </div>
+  <div class="tabpanel open" data-panel="t4">
+    <table class="data">
+      <tr><th>Category</th><th>Traditional ML</th><th>Foundation models</th></tr>
+      <tr><td>Modeling &amp; training</td><td>ML knowledge required — you train from scratch</td>
+          <td>ML knowledge is a <strong>nice-to-have</strong>, not a must-have (disputed!)</td></tr>
+      <tr><td>Dataset engineering</td><td>Feature engineering on tabular data</td>
+          <td>Deduplication, tokenization, context retrieval, quality control on unstructured data</td></tr>
+      <tr><td>Inference optimization</td><td>Important</td><td><strong>Even more important</strong></td></tr>
+    </table>
+  </div>
+  <div class="tabpanel" data-panel="t6">
+    <table class="data">
+      <tr><th>Category</th><th>Traditional ML</th><th>Foundation models</th></tr>
+      <tr><td>AI interface</td><td>Less important</td><td><strong>Important</strong></td></tr>
+      <tr><td>Prompt engineering</td><td>Not applicable</td><td><strong>Important</strong></td></tr>
+      <tr><td>Evaluation</td><td>Important</td><td><strong>More important</strong></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ ADAPTATION ============ -->
+<h2><span class="sec-no">4.3</span>Model adaptation — does it touch the weights?</h2>
+<p>Every adaptation technique falls in one of two buckets:</p>
+<div class="duo">
+  <div class="pane">
+    <h4><span class="dot s1"></span>Prompt-based — weights frozen</h4>
+    <ul>
+      <li>Adapt via <strong>instructions and context</strong>, not the model itself.</li>
+      <li>Easy to start, needs little data; lets you try many models fast (you might find one
+        "unexpectedly good" for your task).</li>
+      <li>May fall short for complex tasks or strict performance requirements.</li>
+    </ul>
+  </div>
+  <div class="pane">
+    <h4><span class="dot s2"></span>Finetuning — weights updated</h4>
+    <ul>
+      <li>Change the model itself by continuing to train it.</li>
+      <li>More complex, needs more data — but can significantly improve
+        <strong>quality, latency, and cost</strong>.</li>
+      <li>Some things are impossible without it (e.g., a task the model never saw in training).</li>
+    </ul>
+  </div>
+</div>
+
+<h3>The training-terminology minefield</h3>
+<details class="acc" open>
+  <summary>Pre-training</summary>
+  <div class="acc-body">Training <strong>from scratch</strong> — weights randomly initialized; for LLMs,
+  usually text completion. The most resource-hungry phase by far: <strong>98%</strong> of InstructGPT's
+  compute and data. Mistakes are expensive; expertise is rare and heavily sought after.</div>
+</details>
+<details class="acc">
+  <summary>Finetuning vs. post-training</summary>
+  <div class="acc-body">Both mean <strong>continuing to train a trained model</strong> — conceptually the
+  same; needs far fewer resources. Usage differs by <em>who does it</em>: <strong>post-training</strong>
+  when model developers do it (OpenAI teaching a model to follow instructions before release);
+  <strong>finetuning</strong> when app developers adapt a released model. Pre- and post-training form a
+  spectrum with similar processes and tooling.</div>
+</details>
+<details class="acc">
+  <summary>Gotchas — what training is <em>not</em></summary>
+  <div class="acc-body"><strong>Quantization</strong> changes weight values (reduces precision) but is
+  <em>not</em> training. And feeding your journal into ChatGPT to "train it to mimic you" is
+  <strong>prompt engineering</strong>, not training or finetuning — teaching via context never touches the
+  weights.</div>
+</details>
+
+<!-- ============ EVALUATION / MMLU ============ -->
+<h2><span class="sec-no">4.4</span>Why evaluation got hard — the Gemini story</h2>
+<p>Close-ended ML tasks have ground truth; a chatbot's prompt has endless valid responses — no exhaustive
+answer key is possible. Worse, <strong>the adaptation technique changes the result</strong>. When Google
+launched Gemini (Dec 2023), it beat ChatGPT on MMLU — evaluated with CoT@32 (32 examples) while ChatGPT
+got 5. At an equal 5 examples, GPT-4 was ahead:</p>
+
+<div class="fig">
+  <div class="fig-title">MMLU score — the ranking flips with the prompt technique</div>
+  <div class="fig-sub">Table 1-5 · position on scale, 80–92% · hover the dots</div>
+  <div class="legend">
+    <span class="key"><span class="dot s1"></span>Gemini Ultra</span>
+    <span class="key"><span class="dot s2"></span>GPT-4</span>
+  </div>
+  <svg viewBox="0 0 820 210" role="img" aria-label="Dot plot with two rows. With a 5-shot prompt, GPT-4 scores 86.4 versus Gemini Ultra 83.7. With chain-of-thought at 32 examples, Gemini Ultra scores 90.04 versus GPT-4 87.29.">
+    <g>
+      <line class="gridline" x1="150" y1="18" x2="150" y2="168"/>
+      <line class="gridline" x1="363.3" y1="18" x2="363.3" y2="168"/>
+      <line class="gridline" x1="576.7" y1="18" x2="576.7" y2="168"/>
+      <line class="gridline" x1="790" y1="18" x2="790" y2="168"/>
+      <text class="axn" x="150" y="186" text-anchor="middle">80%</text>
+      <text class="axn" x="363.3" y="186" text-anchor="middle">84%</text>
+      <text class="axn" x="576.7" y="186" text-anchor="middle">88%</text>
+      <text class="axn" x="790" y="186" text-anchor="middle">92%</text>
+    </g>
+    <!-- 5-shot row: Gemini 83.7 -> 347.3 ; GPT-4 86.4 -> 491.3 -->
+    <g>
+      <text class="dl" x="10" y="64">5-shot</text>
+      <text class="dls" x="10" y="79" style="font-size:10.5px">equal footing</text>
+      <line x1="347.3" y1="60" x2="491.3" y2="60" stroke="var(--grid)" stroke-width="2"/>
+      <circle cx="347.3" cy="60" r="6" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2"
+        data-tip="<b>Gemini Ultra — 83.7%</b>5-shot MMLU."/>
+      <circle cx="491.3" cy="60" r="6" fill="var(--series-2)" stroke="var(--surface-1)" stroke-width="2"
+        data-tip="<b>GPT-4 — 86.4%</b>5-shot MMLU (reported). GPT-4 leads at equal footing."/>
+      <text class="dl" x="335" y="42" text-anchor="end">83.7</text>
+      <text class="dl" x="503" y="42">86.4 — GPT-4 leads</text>
+    </g>
+    <!-- CoT@32 row: GPT-4 87.29 -> 538.8 ; Gemini 90.04 -> 685.5 -->
+    <g>
+      <text class="dl" x="10" y="134">CoT@32</text>
+      <text class="dls" x="10" y="149" style="font-size:10.5px">32 examples</text>
+      <line x1="538.8" y1="130" x2="685.5" y2="130" stroke="var(--grid)" stroke-width="2"/>
+      <circle cx="538.8" cy="130" r="6" fill="var(--series-2)" stroke="var(--surface-1)" stroke-width="2"
+        data-tip="<b>GPT-4 — 87.29%</b>CoT@32, via API."/>
+      <circle cx="685.5" cy="130" r="6" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2"
+        data-tip="<b>Gemini Ultra — 90.04%</b>CoT@32 — the number Google announced. Same model as the 83.7 above; only the prompt changed."/>
+      <text class="dl" x="526" y="112" text-anchor="end">87.29</text>
+      <text class="dl" x="790" y="112" text-anchor="end">90.04 — Gemini leads</text>
+    </g>
+  </svg>
+  <details class="tblview">
+    <summary>View as table</summary>
+    <table class="data">
+      <tr><th>Prompt technique</th><th class="num">Gemini Ultra</th><th class="num">GPT-4</th><th>Leader</th></tr>
+      <tr><td>5-shot</td><td class="num">83.7%</td><td class="num">86.4% (reported)</td><td>GPT-4</td></tr>
+      <tr><td>CoT@32</td><td class="num">90.04%</td><td class="num">87.29% (via API)</td><td>Gemini Ultra</td></tr>
+    </table>
+  </details>
+</div>
+
+<div class="callout">
+  Same models, different prompts, opposite ranking — prompt engineering moved Gemini Ultra from 83.7% to
+  90.04%. That's why evaluation is needed <strong>everywhere</strong>: selecting models, benchmarking
+  progress, deciding deployment readiness, and catching issues in production. It's also why
+  <strong>prompt engineering is real engineering</strong> — instructions, context, tools, and memory
+  management for long tasks.
+</div>
+
+<!-- ============ INTERFACES + WORKFLOW ============ -->
+<h2><span class="sec-no">4.5</span>AI interfaces &amp; the reversed workflow</h2>
+<p>Pre-foundation-model AI hid inside big products (fraud detection in Stripe, recommenders in Netflix).
+Now anyone ships AI — standalone (ChatGPT, Perplexity) or embedded (Copilot in VSCode, Grammarly in the
+browser, Midjourney in Discord); via web/desktop/mobile apps, browser extensions, chat-app bots, plug-in
+APIs — even voice and AR/VR. New interfaces also mean new <strong>feedback channels</strong>: easy for users
+to give in natural language, harder to extract.</p>
+
+<div class="card">
+  <h3 style="margin-top:0">Build order, flipped <span class="subtle">(Shawn Wang, "The Rise of the AI Engineer")</span></h3>
+  <div class="duo">
+    <div class="pane">
+      <h4><span class="dot s2"></span>Traditional ML</h4>
+      <p style="font-size:15px; margin:0"><span class="pill">1 · Gather data</span> →
+      <span class="pill">2 · Train model</span> → <span class="pill">3 · Build product</span></p>
+      <p class="subtle">Product comes last; ML engineers rarely involved in product decisions.</p>
+    </div>
+    <div class="pane">
+      <h4><span class="dot s1"></span>AI engineering</h4>
+      <p style="font-size:15px; margin:0"><span class="pill">1 · Build product</span> →
+      <span class="pill">2 · Invest in data</span> → <span class="pill">3 · Invest in model</span></p>
+      <p class="subtle">Models are ready-made — ship first, invest only once the product shows promise.
+      Rewards fast iteration.</p>
+    </div>
+  </div>
+  <p style="margin-bottom:0">This pulls AI engineering toward <strong>full-stack development</strong>: JavaScript tooling is
+  booming (LangChain.js, Transformers.js, OpenAI Node, Vercel AI SDK), and full-stack engineers' edge is
+  turning ideas into demos <em>fast</em>. As Anton Bacaj put it: "AI engineering is just software
+  engineering with AI models thrown in the stack."</p>
+</div>
+
+<div class="foot-nav">
+  <a href="03-planning.html">← Module 3 · Planning</a>
+  <a href="05-quiz.html">Self-test · Flashcards &amp; Quiz →</a>
+</div>
+
+</div>
+
+<div class="chart-tip" id="tip"></div>
+
+<script>
+/* ---------- layers ---------- */
+const layers = [
+  `<h3 style="margin-top:0">Application development — where differentiation now lives</h3>
+   <p>With everyone using the same models, <strong>the app layer is the differentiator</strong>. Three
+   responsibilities: <strong>evaluation</strong> (mitigate risk, uncover opportunity — needed through the
+   whole adaptation process), <strong>prompt engineering &amp; context construction</strong> (desired
+   behavior from input alone), and <strong>AI interface</strong> (how users meet your app — and how feedback
+   flows back).</p>`,
+  `<h3 style="margin-top:0">Model development — the traditionally-ML layer</h3>
+   <p><strong>Modeling &amp; training</strong> (TensorFlow, HF Transformers, PyTorch — ML knowledge now
+   nice-to-have), <strong>dataset engineering</strong> (open-ended + unstructured data: dedup, tokenization,
+   context retrieval, quality control; "data is the differentiator"), and <strong>inference
+   optimization</strong> (autoregressive generation is sequential: 10&nbsp;ms/token = 1&nbsp;s per 100
+   tokens, vs. the ~100&nbsp;ms users expect — quantization, distillation, parallelism to the rescue).</p>`,
+  `<h3 style="margin-top:0">Infrastructure — the stable bottom</h3>
+   <p>Model serving, data and compute management, monitoring. Least changed by foundation models — the
+   needs are the same as classic ML, just at bigger scale. Its GitHub growth was smallest in the 2023 boom
+   for exactly that reason.</p>`
+];
+const lb = document.getElementById('layer-body');
+const lbtns = [...document.querySelectorAll('.layer-btn')];
+function layerRender(i){
+  lb.innerHTML = layers[i];
+  lbtns.forEach((b,j)=> b.style.background = j===i ? 'var(--series-1-wash)' : 'var(--surface-1)');
+}
+lbtns.forEach(b=> b.addEventListener('click', ()=> layerRender(+b.dataset.layer)));
+layerRender(0);
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tabs').forEach(tabs=>{
+  const btns = [...tabs.querySelectorAll('button[data-tab]')];
+  if(!btns.length) return;
+  btns.forEach(b=> b.addEventListener('click', ()=>{
+    btns.forEach(x=>x.setAttribute('aria-selected', x===b));
+    const scope = tabs.parentElement;
+    scope.querySelectorAll('.tabpanel').forEach(p=> p.classList.toggle('open', p.dataset.panel===b.dataset.tab));
+  }));
+});
+
+/* ---------- chart tooltips ---------- */
+const tip = document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+  el.style.cursor = 'pointer';
+  el.addEventListener('mousemove', e=>{
+    tip.innerHTML = el.dataset.tip;
+    tip.style.opacity = 1;
+    const pad = 14, w = tip.offsetWidth;
+    let x = e.clientX + pad; if (x + w > innerWidth - 8) x = e.clientX - w - pad;
+    tip.style.left = x + 'px'; tip.style.top = (e.clientY + pad) + 'px';
+  });
+  el.addEventListener('mouseleave', ()=>{ tip.style.opacity = 0; });
+});
+</script>
+</body>
+</html>

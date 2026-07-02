@@ -6,11 +6,27 @@ Source PDF: [`AI Engineering_ Building Applications With Foundation Models by Ch
 
 ## Chapters
 
-| # | Chapter | Notes |
-|---|---------|-------|
-| 1 | Introduction to Building AI Applications with Foundation Models | [chapter-01-introduction.md](chapter-01-introduction.md) |
+| # | Chapter | Notes | Interactive |
+|---|---------|-------|-------------|
+| 1 | Introduction to Building AI Applications with Foundation Models | [chapter-01-introduction.md](chapter-01-introduction.md) | [interactive/index.html](interactive/index.html) |
 
 *More chapters to be added.*
+
+## Interactive learning pages
+
+The [`interactive/`](interactive/) folder contains a self-contained set of HTML study pages for
+Chapter 1 — open `interactive/index.html` in any browser (no server or build step needed):
+
+- **Hub** — chapter thesis, key numbers, module directory
+- **Module 1 · The Rise of AI Engineering** — evolution stepper, tokenization playground, masked vs.
+  autoregressive toggle, self-supervision sample builder, model-scale chart
+- **Module 2 · Use Cases** — eight-category flip-card explorer, evidence tiles, developer-productivity chart
+- **Module 3 · Planning** — risk ladder, AI-role axes, Crawl–Walk–Run, moats, metrics, last-mile chart
+- **Module 4 · The Stack** — three-layer explorer, AI vs. ML comparisons, adaptation & training terms,
+  the Gemini/GPT-4 MMLU prompt-sensitivity chart
+- **Self-test** — 18 flashcards + 12-question quiz with explanations
+
+Pages support light and dark mode automatically, and every chart has hover tooltips plus a table view.
 
 ## How these notes are organized
 

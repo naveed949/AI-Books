@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 2 · Foundation Model Use Cases</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">AI Engineering <span>· Ch. 1</span></div>
+    <a href="index.html">Hub</a>
+    <a href="01-rise.html">1 · Rise</a>
+    <a href="02-use-cases.html" class="active">2 · Use Cases</a>
+    <a href="03-planning.html">3 · Planning</a>
+    <a href="04-stack.html">4 · Stack</a>
+    <a href="05-quiz.html">Quiz</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="pagehead">
+  <div class="kicker">Module 2</div>
+  <h1>Foundation Model Use Cases</h1>
+  <p class="lede">Huyen interviewed 50 companies, read 100+ case studies, and examined 205 open source AI
+  apps (≥500 GitHub stars) — and distilled it all into <strong>eight categories</strong>. Flip each card to
+  see consumer vs. enterprise examples and the evidence.</p>
+</header>
+
+<!-- ============ CATEGORY EXPLORER ============ -->
+<h2><span class="sec-no">2.1</span>The eight categories — flip to explore</h2>
+<div class="grid-cards" id="cats"></div>
+<p class="subtle">Categories overlap on purpose — foundation models are general, so one app can extract data
+from a PDF <em>and</em> answer questions about it.</p>
+
+<!-- ============ EVIDENCE TILES ============ -->
+<h2><span class="sec-no">2.2</span>The receipts</h2>
+<div class="tiles">
+  <div class="tile">
+    <div class="t-label">GitHub Copilot ARR, 2 yrs after launch</div>
+    <div class="t-value">$100M</div>
+    <div class="t-note">one of the earliest foundation-model successes</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Midjourney ARR at ~1.5 years old</div>
+    <div class="t-value">$200M</div>
+    <div class="t-note">late 2023</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Writing time with ChatGPT (MIT study)</div>
+    <div class="t-value">−40%</div>
+    <div class="t-note">quality +18%; gap between writers narrows</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Chegg share price, Nov 2022 → Sep 2024</div>
+    <div class="t-value">$28 → $2</div>
+    <div class="t-note">students switched to AI for homework help</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">GenAI users who use it to summarize</div>
+    <div class="t-value">74%</div>
+    <div class="t-note">Salesforce 2023 Generative AI Snapshot</div>
+  </div>
+  <div class="tile">
+    <div class="t-label">Intelligent data processing market by 2030</div>
+    <div class="t-value">$12.81B</div>
+    <div class="t-note">growing 32.9% per year</div>
+  </div>
+</div>
+
+<!-- ============ McKINSEY CHART ============ -->
+<h2><span class="sec-no">2.3</span>Where AI helps developers (and where it doesn't)</h2>
+<p>Coding is "hands down the most popular use case" — but the productivity gain depends on the task.
+The pattern generalizes: AI shines on simple, well-bounded work; gains fade as complexity rises.</p>
+
+<div class="fig">
+  <div class="fig-title">Developer productivity gains with AI, by task</div>
+  <div class="fig-sub">McKinsey, as reported in the chapter (Figure 1-9) · hover the bars</div>
+  <svg viewBox="0 0 820 250" role="img" aria-label="Horizontal bars: documentation about twice as productive; code generation and refactoring 25 to 50 percent more productive; highly complex tasks minimal improvement.">
+    <g>
+      <line class="gridline" x1="190" y1="14" x2="190" y2="212"/>
+      <line class="gridline" x1="340" y1="14" x2="340" y2="212"/>
+      <line class="gridline" x1="490" y1="14" x2="490" y2="212"/>
+      <line class="gridline" x1="640" y1="14" x2="640" y2="212"/>
+      <line class="gridline" x1="790" y1="14" x2="790" y2="212"/>
+      <text class="axn" x="190" y="228" text-anchor="middle">0</text>
+      <text class="axn" x="340" y="228" text-anchor="middle">+25%</text>
+      <text class="axn" x="490" y="228" text-anchor="middle">+50%</text>
+      <text class="axn" x="640" y="228" text-anchor="middle">+75%</text>
+      <text class="axn" x="790" y="228" text-anchor="middle">+100%</text>
+    </g>
+    <g>
+      <text class="dl" x="10" y="45">Documentation</text>
+      <path d="M190 32 h592 a4 4 0 0 1 4 4 v10 a4 4 0 0 1 -4 4 h-592 z" fill="var(--series-1)"
+        data-tip="<b>Documentation — ≈2× productivity</b>AI roughly doubles developer output on docs."/>
+      <text x="774" y="45" text-anchor="end" style="fill:#fff;font-size:12px;font-weight:600;font-family:system-ui">≈2×</text>
+
+      <text class="dl" x="10" y="95">Code generation</text>
+      <rect x="340" y="82" width="150" height="18" rx="4" fill="var(--series-1)"
+        data-tip="<b>Code generation — +25–50%</b>Reported as a range, drawn end-to-end."/>
+      <text class="dl" x="498" y="95">+25–50%</text>
+
+      <text class="dl" x="10" y="145">Code refactoring</text>
+      <rect x="340" y="132" width="150" height="18" rx="4" fill="var(--series-1)"
+        data-tip="<b>Code refactoring — +25–50%</b>Reported as a range, drawn end-to-end."/>
+      <text class="dl" x="498" y="145">+25–50%</text>
+
+      <text class="dl" x="10" y="195">Highly complex tasks</text>
+      <line x1="190" y1="182" x2="190" y2="200" stroke="var(--baseline)" stroke-width="2"
+        data-tip="<b>Highly complex tasks — minimal</b>McKinsey observed minimal improvement; no figure given, so no bar is drawn."/>
+      <text class="dls" x="200" y="195">minimal — not quantified</text>
+    </g>
+    <line class="baseline-l" x1="190" y1="212" x2="790" y2="212"/>
+  </svg>
+  <details class="tblview">
+    <summary>View as table</summary>
+    <table class="data">
+      <tr><th>Task</th><th>Reported gain</th></tr>
+      <tr><td>Documentation</td><td>≈2× productivity</td></tr>
+      <tr><td>Code generation</td><td>+25–50%</td></tr>
+      <tr><td>Code refactoring</td><td>+25–50%</td></tr>
+      <tr><td>Highly complex tasks</td><td>Minimal improvement</td></tr>
+    </table>
+  </details>
+</div>
+
+<div class="callout">
+  Related signals from the chapter: developers say AI is better at <strong>frontend than backend</strong>;
+  companies can do more with fewer engineers; the <strong>outsourcing industry</strong> is exposed (its tasks
+  skew simple); and the replacement debate spans Jensen Huang's "stop saying kids should learn to code" to
+  AWS's Matt Garman: most developers will stop <em>coding</em> — the job changes, it doesn't vanish.
+</div>
+
+<!-- ============ EXPOSURE ============ -->
+<h2><span class="sec-no">2.4</span>Which occupations are most "exposed"?</h2>
+<p>Eloundou et al. (2023), <em>"GPTs are GPTs"</em>: a task is <strong>exposed</strong> if AI can cut its
+completion time by ≥50%. Humans labeled 15 occupations "fully exposed."</p>
+<div class="duo">
+  <div class="pane">
+    <h4><span class="dot s1"></span>Highest exposure (up to 100%)</h4>
+    <div class="pill-row">
+      <span class="pill">Mathematicians</span><span class="pill">Tax preparers</span>
+      <span class="pill">Financial quant analysts</span><span class="pill">Writers &amp; authors</span>
+      <span class="pill">Web &amp; digital designers</span><span class="pill">Interpreters &amp; translators</span>
+      <span class="pill">Survey researchers</span><span class="pill">PR specialists</span>
+    </div>
+  </div>
+  <div class="pane">
+    <h4><span class="dot s2"></span>No exposure</h4>
+    <div class="pill-row">
+      <span class="pill">Cooks</span><span class="pill">Stonemasons</span><span class="pill">Athletes</span>
+    </div>
+    <p class="subtle" style="margin-bottom:0">Pattern: exposure tracks how much of the job is
+    <em>communication and text</em> vs. physical-world work.</p>
+  </div>
+</div>
+
+<!-- ============ ENTERPRISE RISK ============ -->
+<h2><span class="sec-no">2.5</span>How enterprises actually deploy</h2>
+<div class="duo">
+  <div class="pane">
+    <h4><span class="dot s1"></span>Internal-facing first</h4>
+    <ul>
+      <li>a16z Growth (2024): companies ship <strong>internal</strong> apps (knowledge management) faster
+        than <strong>external</strong> ones (support chatbots).</li>
+      <li>Internal apps build AI expertise while limiting risks: data privacy, compliance, catastrophic
+        failures.</li>
+    </ul>
+  </div>
+  <div class="pane">
+    <h4><span class="dot s2"></span>Close-ended over open-ended</h4>
+    <ul>
+      <li>Foundation models are open-ended, but many apps built on them stay <strong>close-ended</strong>
+        (e.g., classification).</li>
+      <li>Close-ended tasks are <strong>easier to evaluate</strong> → risks easier to estimate.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout">
+  In the early internet, few predicted social media would dominate. "As we learn to make the most out of
+  AI, the use case that will eventually dominate might surprise us."
+</div>
+
+<div class="foot-nav">
+  <a href="01-rise.html">← Module 1 · Rise</a>
+  <a href="03-planning.html">Module 3 · Planning →</a>
+</div>
+
+</div>
+
+<div class="chart-tip" id="tip"></div>
+
+<script>
+/* ---------- category flip cards ---------- */
+const cats = [
+  { name:'Coding', emoji:'⌨️',
+    c:'General coding, English→SQL, screenshot→website, translating frameworks, docs, tests, commit messages',
+    e:'Same — coding is the #1 use case in surveys',
+    ev:'Copilot: $100M ARR in 2 years' },
+  { name:'Image & video production', emoji:'🎬',
+    c:'Photo/video editing, design, AI profile photos',
+    e:'Presentations, ad generation, seasonal ad variants',
+    ev:'Midjourney: $200M ARR at ~1.5 yrs' },
+  { name:'Writing', emoji:'✍️',
+    c:'Email, social media & blog posts, essays, fiction',
+    e:'Copywriting, SEO, reports, memos, design docs, outreach',
+    ev:'MIT study: time −40%, quality +18%' },
+  { name:'Education', emoji:'🎓',
+    c:'Tutoring, essay grading, personalized materials, language practice',
+    e:'Employee onboarding, upskill training',
+    ev:'Duolingo: personalization stage benefits most; Chegg $28→$2' },
+  { name:'Conversational bots', emoji:'💬',
+    c:'General chatbots, AI companions, smart NPCs in games',
+    e:'Customer support, product copilots (taxes, claims, policies)',
+    ev:'Bots can even simulate societies (Park et al., 2023)' },
+  { name:'Information aggregation', emoji:'📰',
+    c:'Summarization, talk-to-your-docs',
+    e:'Meeting/email/Slack distillation, market research',
+    ev:'74% of genAI users summarize (Salesforce); Instacart "Fast Breakdown"' },
+  { name:'Data organization', emoji:'🗂️',
+    c:'Image search, memex',
+    e:'Knowledge management, document processing, extract structured from unstructured',
+    ev:'IDP market: $12.81B by 2030 (+32.9%/yr)' },
+  { name:'Workflow automation', emoji:'⚙️',
+    c:'Travel & event planning, refunds, forms',
+    e:'Data extraction/entry/annotation, lead generation, invoicing',
+    ev:'Agents = AI that can plan and use tools (Chapter 6)' },
+];
+document.getElementById('cats').innerHTML = cats.map(c=>`
+  <div class="flip" tabindex="0" role="button" aria-label="${c.name} — activate to flip">
+    <div class="inner">
+      <div class="face">
+        <div style="font-size:26px">${c.emoji}</div>
+        <div class="f-title">${c.name}</div>
+        <div class="f-hint">Click to flip ↻</div>
+      </div>
+      <div class="face back">
+        <div><strong style="color:var(--text-primary)">Consumer:</strong> ${c.c}</div>
+        <div style="margin-top:6px"><strong style="color:var(--text-primary)">Enterprise:</strong> ${c.e}</div>
+        <div style="margin-top:6px; color:var(--accent-ink); font-weight:600">${c.ev}</div>
+      </div>
+    </div>
+  </div>`).join('');
+document.querySelectorAll('.flip').forEach(f=>{
+  const t = ()=> f.classList.toggle('flipped');
+  f.addEventListener('click', t);
+  f.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t(); } });
+});
+
+/* ---------- chart tooltips ---------- */
+const tip = document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+  el.style.cursor = 'pointer';
+  el.addEventListener('mousemove', e=>{
+    tip.innerHTML = el.dataset.tip;
+    tip.style.opacity = 1;
+    const pad = 14, w = tip.offsetWidth;
+    let x = e.clientX + pad; if (x + w > innerWidth - 8) x = e.clientX - w - pad;
+    tip.style.left = x + 'px'; tip.style.top = (e.clientY + pad) + 'px';
+  });
+  el.addEventListener('mouseleave', ()=>{ tip.style.opacity = 0; });
+});
+</script>
+</body>
+</html>

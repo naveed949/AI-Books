@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-test · Flashcards &amp; Quiz — AI Engineering Ch. 1</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">AI Engineering <span>· Ch. 1</span></div>
+    <a href="index.html">Hub</a>
+    <a href="01-rise.html">1 · Rise</a>
+    <a href="02-use-cases.html">2 · Use Cases</a>
+    <a href="03-planning.html">3 · Planning</a>
+    <a href="04-stack.html">4 · Stack</a>
+    <a href="05-quiz.html" class="active">Quiz</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="pagehead">
+  <div class="kicker">Self-test</div>
+  <h1>Flashcards &amp; Quiz</h1>
+  <p class="lede">First drill the vocabulary with 18 flashcards, then take the 12-question quiz. Every
+  answer comes with the chapter's reasoning.</p>
+</header>
+
+<!-- ============ FLASHCARDS ============ -->
+<h2><span class="sec-no">A</span>Flashcards — key terms</h2>
+<p class="subtle">Click the card (or press <kbd>Space</kbd>) to flip · <kbd>←</kbd>/<kbd>→</kbd> to navigate</p>
+
+<div class="meter"><div id="fc-meter"></div></div>
+<div class="flip" id="fc-card" tabindex="0" style="min-height:210px; max-width:640px; margin:0 auto;">
+  <div class="inner" style="min-height:210px">
+    <div class="face" style="align-items:center; text-align:center;">
+      <div class="f-title" id="fc-front" style="font-size:20px"></div>
+      <div class="f-hint">Click to reveal</div>
+    </div>
+    <div class="face back" style="align-items:center; text-align:center; justify-content:center; font-size:15px;" id="fc-back"></div>
+  </div>
+</div>
+<div class="step-controls" style="justify-content:center; margin-top:16px;">
+  <button class="btn" id="fc-prev">← Prev</button>
+  <span class="subtle" id="fc-count" style="align-self:center; min-width:70px; text-align:center;"></span>
+  <button class="btn" id="fc-next">Next →</button>
+  <button class="btn" id="fc-shuffle">🔀 Shuffle</button>
+</div>
+
+<!-- ============ QUIZ ============ -->
+<h2 style="margin-top:64px"><span class="sec-no">B</span>The quiz</h2>
+<div class="meter"><div id="q-meter"></div></div>
+<div class="q-card" id="quiz"></div>
+
+<div class="foot-nav">
+  <a href="04-stack.html">← Module 4 · The Stack</a>
+  <a href="index.html">Back to the Hub →</a>
+</div>
+
+</div>
+
+<script>
+/* ================= FLASHCARDS ================= */
+const cards = [
+  ['Language model', 'Encodes statistical information about one or more languages — how likely a token is in a given context. ("My favorite color is __" → "blue" ≫ "car")'],
+  ['Token · tokenization · vocabulary', 'Token = the basic unit (character, word, or sub-word). Tokenization = splitting text into tokens. Vocabulary = all tokens a model can use (GPT-4: 100,256). Rule of thumb: 100 tokens ≈ 75 words.'],
+  ['Masked language model', 'Fills in the blank using context from BOTH sides (e.g. BERT). Used for non-generative tasks: sentiment analysis, classification, code debugging.'],
+  ['Autoregressive language model', 'Predicts the next token from PRECEDING tokens only; generates token by token. Today\'s choice for text generation — the book\'s default meaning of "language model". Also called causal.'],
+  ['Generative AI', 'Models whose outputs are open-ended: a finite vocabulary constructs infinite possible outputs. Completions are probabilistic predictions — never guaranteed correct.'],
+  ['Self-supervision', 'The model infers labels from the input data itself — every sentence supplies contexts + labels ("I love street food." = 6 samples). Removed the data-labeling bottleneck and enabled scaling. NOT the same as unsupervised (which needs no labels at all).'],
+  ['Parameter', 'A variable in the model updated during training; the standard measure of model size. GPT-1: 117M · GPT-2: 1.5B · "large" at writing: ~100B.'],
+  ['Foundation model', 'A large model that is both important to applications and buildable-upon. The book\'s term covering LLMs and large multimodal models (LMMs). Marks the shift from task-specific to general-purpose AI.'],
+  ['Multimodal model · LMM', 'Handles more than one data modality (text + images, video, 3D…). A generative multimodal model is a large multimodal model (LMM).'],
+  ['Embedding model (e.g. CLIP)', 'Produces vectors that capture the meaning of data instead of generating output. CLIP trained on 400M internet-found (image, text) pairs — natural language supervision, no manual labels — and backbones generative models like Flamingo, LLaVA, Gemini.'],
+  ['Model as a service', 'Models exposed through APIs so anyone can use them without hosting infrastructure — the delivery model (popularized by OpenAI) that dropped the barrier to building AI apps.'],
+  ['AI engineering', 'Building applications on top of readily available foundation models. vs. ML engineering: less modeling and training, more model adaptation and evaluation.'],
+  ['Prompt engineering · RAG · finetuning', 'The three adaptation techniques: craft instructions/examples (no weight change) · supplement prompts with retrieved data, e.g. a review database (no weight change) · continue training on your data (weights updated).'],
+  ['Pre-training vs. post-training', 'Pre-training = from scratch, randomly initialized — up to 98% of resources (InstructGPT). Post-training / finetuning = continued training; "post-training" when model developers do it, "finetuning" when app developers do. Quantization changes weights but is NOT training.'],
+  ['Human-in-the-loop · Crawl-Walk-Run', 'Involving humans in AI\'s decisions. Microsoft\'s ramp: Crawl = human involvement mandatory → Walk = AI with internal employees → Run = automation, possibly direct to external users.'],
+  ['Usefulness threshold · TTFT · TPOT', 'How good the product must be before it ships — spanning quality, latency (TTFT = time to first token, TPOT = time per output token), cost per inference, interpretability, fairness.'],
+  ['The three stack layers', 'Application development (prompts, evaluation, interfaces) · Model development (training, dataset engineering, inference optimization) · Infrastructure (serving, data/compute, monitoring). Start at the top, move down as needed.'],
+  ['The last-mile challenge', '"0 to 60 is easy; 60 to 100 is exceedingly challenging." LinkedIn: 1 month to 80% of the target experience, 4 more months to pass 95%. A weekend demo ≠ a product.'],
+];
+let fcOrder = cards.map((_,i)=>i), fcI = 0;
+const fcCard = document.getElementById('fc-card');
+function fcRender(){
+  fcCard.classList.remove('flipped');
+  const [f,b] = cards[fcOrder[fcI]];
+  document.getElementById('fc-front').textContent = f;
+  document.getElementById('fc-back').textContent = b;
+  document.getElementById('fc-count').textContent = (fcI+1)+' / '+cards.length;
+  document.getElementById('fc-meter').style.width = ((fcI+1)/cards.length*100)+'%';
+}
+fcCard.addEventListener('click', ()=> fcCard.classList.toggle('flipped'));
+document.getElementById('fc-prev').onclick = ()=>{ fcI = (fcI-1+cards.length)%cards.length; fcRender(); };
+document.getElementById('fc-next').onclick = ()=>{ fcI = (fcI+1)%cards.length; fcRender(); };
+document.getElementById('fc-shuffle').onclick = ()=>{
+  for(let i=fcOrder.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [fcOrder[i],fcOrder[j]]=[fcOrder[j],fcOrder[i]]; }
+  fcI=0; fcRender();
+};
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowLeft') document.getElementById('fc-prev').click();
+  if(e.key==='ArrowRight') document.getElementById('fc-next').click();
+  if(e.key===' ' && document.activeElement===fcCard){ e.preventDefault(); fcCard.classList.toggle('flipped'); }
+});
+fcRender();
+
+/* ================= QUIZ ================= */
+const Q = [
+  { q:'Why did language models — not recommenders or forecasters — become the center of the scaling race?',
+    o:['They have the most parameters','They can be trained with self-supervision, so training data is effectively unlimited','They were the first neural networks','Regulators favored them'],
+    a:1, x:'Self-supervision lets a model infer labels from the input itself. Text is everywhere, so no labeling bottleneck — models could scale into LLMs.' },
+  { q:'For GPT-4, roughly how many words is 100 tokens?',
+    o:['133 words','100 words','75 words','50 words'],
+    a:2, x:'An average GPT-4 token is ≈¾ of a word, so 100 tokens ≈ 75 words.' },
+  { q:'Which model type dominates text generation today?',
+    o:['Masked language models','Autoregressive language models','Embedding models','Convolutional models'],
+    a:1, x:'Autoregressive models predict the next token from preceding tokens and generate one after another. Masked models (BERT) serve non-generative tasks.' },
+  { q:'Self-supervision differs from unsupervised learning because…',
+    o:['it needs no data at all','labels are inferred from the input data, rather than not needed at all','it only works on images','humans still label a small sample'],
+    a:1, x:'Self-supervised: labels are inferred from input. Unsupervised: no labels at all. The chapter flags this exact distinction.' },
+  { q:'CLIP, the model behind many multimodal systems, is…',
+    o:['a generative model','an embedding model producing joint text-image vectors','a speech model','a finetuned GPT'],
+    a:1, x:'CLIP was trained on 400M internet-found (image, text) pairs to produce joint embeddings — not to generate open-ended output.' },
+  { q:'Which adaptation technique updates the model\'s weights?',
+    o:['Prompt engineering','RAG','Finetuning','All three'],
+    a:2, x:'Prompt engineering and RAG shape the input; only finetuning (continued training) changes the weights.' },
+  { q:'OpenAI teaches a model to follow instructions before release; you adapt that model to your task. In the chapter\'s usage, these are called…',
+    o:['both finetuning','post-training (them) and finetuning (you)','pre-training (them) and post-training (you)','distillation and quantization'],
+    a:1, x:'Conceptually the same, but "post-training" is what model developers do; "finetuning" is what application developers do.' },
+  { q:'In the Gemini launch story, what flipped the MMLU ranking between Gemini Ultra and GPT-4?',
+    o:['A bigger model','More training data','The prompt technique (CoT@32 vs 5-shot)','A different benchmark'],
+    a:2, x:'With CoT@32 Gemini scored 90.04% vs GPT-4\'s 87.29%; at an equal 5-shot, GPT-4 led 86.4% to 83.7%. Prompts alone moved Gemini +6.3 points.' },
+  { q:'Which is NOT one of the three big shifts from ML engineering to AI engineering?',
+    o:['Model adaptation instead of training your own','Bigger models with more compute and latency pressure','Open-ended outputs making evaluation harder','Feature engineering on tabular data becoming central'],
+    a:3, x:'Tabular feature engineering is the traditional-ML profile. The three shifts: adaptation over training, bigger models, harder (open-ended) evaluation.' },
+  { q:'In Microsoft\'s Crawl-Walk-Run framework, "Walk" means…',
+    o:['AI interacts directly with internal employees','human involvement is mandatory','AI interacts with external users','the model is retrained weekly'],
+    a:0, x:'Crawl = humans mandatory; Walk = AI with internal employees; Run = more automation, potentially direct to external users.' },
+  { q:'LinkedIn reached 80% of its desired AI experience in one month. Passing 95% took…',
+    o:['another week','one more month','four more months','it never did'],
+    a:2, x:'The last-mile challenge: 4 extra months fighting kinks and hallucinations — each additional 1% discouragingly slow.' },
+  { q:'In Huyen\'s GitHub analysis, which stack layer grew least after the 2023 boom — and why?',
+    o:['Applications — the market saturated','Infrastructure — core needs (serving, monitoring, compute) stay the same regardless of model changes','Model development — nobody trains anymore','App development — prompts replaced code'],
+    a:1, x:'Apps and app-dev tooling exploded; infrastructure barely moved because resource management, serving, and monitoring needs are unchanged by the model generation.' },
+];
+let qi = 0, score = 0, answered = false;
+const quiz = document.getElementById('quiz');
+function qRender(){
+  document.getElementById('q-meter').style.width = (qi/Q.length*100)+'%';
+  if(qi >= Q.length){
+    const pct = Math.round(score/Q.length*100);
+    const msg = pct===100 ? 'Perfect — you own this chapter.' : pct>=75 ? 'Strong. Skim the modules you missed.' : pct>=50 ? 'Solid start — revisit the modules above.' : 'Worth a re-read — the hub links every module.';
+    quiz.innerHTML = `
+      <div class="q-progress">Complete</div>
+      <div class="q-score">${score} / ${Q.length} <span style="font-size:16px; color:var(--text-muted); font-weight:500">(${pct}%)</span></div>
+      <p>${msg}</p>
+      <button class="btn primary" onclick="qi=0;score=0;qRender()">Retake quiz</button>`;
+    document.getElementById('q-meter').style.width = '100%';
+    return;
+  }
+  const item = Q[qi];
+  answered = false;
+  quiz.innerHTML = `
+    <div class="q-progress">Question ${qi+1} of ${Q.length} · score ${score}</div>
+    <p class="q-question">${item.q}</p>
+    <div class="q-opts">${item.o.map((o,i)=>`<button data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="q-explain" id="q-explain"><strong>${''}</strong>${item.x}</div>
+    <div class="step-controls"><button class="btn primary" id="q-next" style="display:none">${qi===Q.length-1?'See score':'Next question'} →</button></div>`;
+  quiz.querySelectorAll('.q-opts button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      if(answered) return;
+      answered = true;
+      const pick = +b.dataset.i;
+      if(pick === item.a) score++;
+      quiz.querySelectorAll('.q-opts button').forEach((x,i)=>{
+        x.disabled = true;
+        if(i===item.a) x.classList.add('correct');
+        else if(i===pick) x.classList.add('wrong');
+      });
+      document.getElementById('q-explain').classList.add('show');
+      document.getElementById('q-next').style.display = 'inline-block';
+      document.getElementById('q-next').onclick = ()=>{ qi++; qRender(); };
+    });
+  });
+}
+qRender();
+</script>
+</body>
+</html>
